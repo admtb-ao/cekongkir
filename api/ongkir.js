@@ -1,6 +1,6 @@
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method Not Allowed' });
+    return res.status(405).json({ status: 405, message: 'Method Not Allowed' });
   }
 
   const { asal, tujuan, berat, kurir } = req.body;
@@ -11,26 +11,41 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Menggunakan Endpoint Sandbox Komerce Tariff API
+    // Menggunakan format JSON yang lebih universal untuk API Komerce
     const response = await fetch('https://api-sandbox.komerce.id/tariff/api/v1/calculate', {
       method: 'POST',
       headers: {
         'key': apiKey,
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       },
-      body: new URLSearchParams({
-        origin: asal,
-        destination: tujuan,
-        weight: berat,
+      body: JSON.stringify({
+        origin: Number(asal),
+        destination: Number(tujuan),
+        weight: Number(berat),
         courier: kurir
       })
     });
 
-    const data = await response.json();
+    const responseText = await response.text();
+    
+    let data;
+    try {
+      data = JSON.parse(responseText);
+    } catch (e) {
+      // Tangkap kalau server Komerce balikin HTML error (misal 404 / 502)
+      return res.status(200).json({ 
+        status: 500, 
+        message: `Komerce Server Error (${response.status}): ${responseText.substring(0, 150)}` 
+      });
+    }
     
     return res.status(200).json(data);
 
   } catch (error) {
-    return res.status(500).json({ status: 500, message: 'Gagal menghubungi server Sandbox Komerce' });
+    return res.status(200).json({ 
+      status: 500, 
+      message: `Network/Fetch Exception: ${error.message}` 
+    });
   }
 }
