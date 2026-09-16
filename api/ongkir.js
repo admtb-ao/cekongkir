@@ -16,6 +16,7 @@ export default async function handler(req, res) {
     const response = await fetch(url);
     const data = await response.json();
     
+    // Debugging aman: Teruskan apa adanya dari BinderByte ke frontend
     return res.status(200).json(data);
   } catch (error) {
     return res.status(500).json({ status: 500, message: 'Gagal menghubungi server BinderByte' });
