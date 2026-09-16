@@ -96,27 +96,8 @@
                             <p class="text-xs text-slate-500">Kirim ke semua kota & kabupaten</p>
                         </div>
                     </div>
-                    <div class="flex items-start space-x-3">
-                        <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
-                            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-sm text-slate-800">Update Harga</h4>
-                            <p class="text-xs text-slate-500">Tarif selalu terbaru dan akurat</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start space-x-3">
-                        <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
-                            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-sm text-slate-800">Mudah & Cepat</h4>
-                            <p class="text-xs text-slate-500">Hanya dalam beberapa detik</p>
-                        </div>
-                    </div>
                 </div>
             </div>
-            <!-- Decorative Right Side -->
             <div class="md:w-1/2 mt-10 md:mt-0 relative h-64 z-10 hidden md:block">
                <div class="absolute inset-0 bg-[url('https://upload.wikimedia.org/wikipedia/commons/4/46/Indonesia_location_map.svg')] bg-no-repeat bg-contain opacity-20"></div>
                <div class="absolute right-0 top-1/2 transform -translate-y-1/2 rotate-3 bg-white p-4 shadow-xl rounded-xl">
@@ -186,10 +167,16 @@
                             <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
                         </div>
                         <select id="courier" class="pl-9 w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-white">
-                            <option value="jne,jnt,sicepat,anteraja,pos,tiki,ninja">Semua Ekspedisi</option>
+                            <option value="jne,jnt,sicepat,anteraja,pos,tiki,ninja,rpx,lion,wahana">Semua Ekspedisi (Lengkap)</option>
                             <option value="jne">JNE</option>
-                            <option value="jnt">J&T</option>
+                            <option value="jnt">J&T Express</option>
                             <option value="sicepat">SiCepat</option>
+                            <option value="anteraja">AnterAja</option>
+                            <option value="pos">POS Indonesia</option>
+                            <option value="tiki">TIKI</option>
+                            <option value="ninja">Ninja Xpress</option>
+                            <option value="lion">Lion Parcel</option>
+                            <option value="wahana">Wahana</option>
                         </select>
                         <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                             <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -239,17 +226,12 @@
                             <h3 class="font-bold text-lg text-slate-800">Hasil Pencarian</h3>
                             <p class="text-xs text-slate-500" id="resultMeta">Silakan lakukan pencarian ongkir terlebih dahulu.</p>
                         </div>
-                        <button class="flex items-center space-x-1 border border-gray-200 rounded-lg px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-gray-50">
-                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"></path></svg>
-                            <span>Urutkan</span>
-                        </button>
                     </div>
 
                     <!-- Table List -->
                     <div class="overflow-hidden">
                         <table class="w-full text-left text-sm" id="resultsTable">
                             <tbody class="divide-y divide-gray-100" id="resultsBody">
-                                <!-- Data dummy awal dibersihkan agar rapi -->
                                 <tr><td colspan="5" class="text-center text-slate-400 py-8">Hasil tarif pengiriman akan muncul di sini</td></tr>
                             </tbody>
                         </table>
@@ -267,29 +249,39 @@
     <div class="fixed bottom-0 left-0 w-full h-64 bg-[#1e3a8a] z-0" style="clip-path: ellipse(150% 100% at 50% 100%);"></div>
 
     <script>
-        let cities = [];
+        // Fallback data instan agar dropdown tidak kosong
+        let cities = [
+            { id: "54", name: "Kab. Bantul, DI Yogyakarta", searchKey: "bantul di yogyakarta" },
+            { id: "505", name: "Kota Yogyakarta, DI Yogyakarta", searchKey: "yogyakarta di yogyakarta" },
+            { id: "419", name: "Kab. Sleman, DI Yogyakarta", searchKey: "sleman di yogyakarta" },
+            { id: "390", name: "Kota Samarinda, Kalimantan Timur", searchKey: "samarinda kalimantan timur" },
+            { id: "42", name: "Kota Balikpapan, Kalimantan Timur", searchKey: "balikpapan kalimantan timur" },
+            { id: "152", name: "Kota Jakarta Pusat, DKI Jakarta", searchKey: "jakarta pusat dki jakarta" },
+            { id: "151", name: "Kota Jakarta Barat, DKI Jakarta", searchKey: "jakarta barat dki jakarta" },
+            { id: "153", name: "Kota Jakarta Selatan, DKI Jakarta", searchKey: "jakarta selatan dki jakarta" },
+            { id: "154", name: "Kota Jakarta Timur, DKI Jakarta", searchKey: "jakarta timur dki jakarta" },
+            { id: "155", name: "Kota Jakarta Utara, DKI Jakarta", searchKey: "jakarta utara dki jakarta" },
+            { id: "23", name: "Kota Bandung, Jawa Barat", searchKey: "bandung jawa barat" },
+            { id: "444", name: "Kota Surabaya, Jawa Timur", searchKey: "surabaya jawa timur" },
+            { id: "278", name: "Kota Medan, Sumatera Utara", searchKey: "medan sumatera utara" },
+            { id: "271", name: "Kota Makassar, Sulawesi Selatan", searchKey: "makassar sulawesi selatan" }
+        ];
 
-        // Fetch otomatis data valid ID RajaOngkir/BinderByte
+        // Fetch otomatis seluruh kota se-Indonesia di background
         async function loadAllCities() {
             try {
-                // Menggunakan repo raw data RajaOngkir asli
                 const res = await fetch('https://raw.githubusercontent.com/sastrawira/rajaongkir-json/master/city.json');
                 const data = await res.json();
                 const results = data.rajaongkir.results;
 
                 cities = results.map(c => ({
                     id: c.city_id,
-                    // Format tampilan rapi di dropdown
                     name: `${c.type === 'Kota' ? 'Kota' : 'Kab.'} ${c.city_name}, ${c.province}`,
-                    // Keyword pencarian rahasia biar gampang diketik user
                     searchKey: `${c.city_name} ${c.province}`.toLowerCase()
                 }));
-                
-                document.getElementById('originInput').placeholder = "Contoh: Sleman";
-                document.getElementById('destinationInput').placeholder = "Contoh: Bantul";
-                console.log("Berhasil load " + cities.length + " kota/kabupaten.");
+                console.log("Berhasil load full " + cities.length + " kota se-Indonesia.");
             } catch (err) {
-                console.error("Gagal load kota.", err);
+                console.log("Menggunakan data cadangan lokal.");
             }
         }
 
@@ -305,7 +297,7 @@
                 dropdown.innerHTML = '';
                 if (!val) { dropdown.classList.remove('show'); return; }
 
-                // LOGIKA BARU: Filter cerdas nyari kecocokan di 'searchKey' juga (tanpa embel-embel Kab/Kota)
+                // Smart Search: bisa cari walau tanpa ngetik "Kab." atau "Kota"
                 const filtered = cities.filter(c => 
                     c.searchKey.includes(val) || c.name.toLowerCase().includes(val)
                 ).slice(0, 15);
