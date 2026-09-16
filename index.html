@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cek Ongkir Semua Ekspedisi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .hero-bg {
+            background: linear-gradient(135deg, #f0f5ff 0%, #e0ebff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            width: 100%;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            z-index: 50;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            margin-top: 0.25rem;
+        }
+        .dropdown-content.show { display: block; }
+        .dropdown-item { padding: 8px 12px; cursor: pointer; }
+        .dropdown-item:hover { background-color: #f1f5f9; }
+        .wave-bottom {
+            position: absolute;
+            bottom: 0; left: 0; width: 100%; overflow: hidden; line-height: 0;
+        }
+        .wave-bottom svg {
+            position: relative; display: block; width: calc(100% + 1.3px); height: 150px;
+        }
+        .wave-bottom .shape-fill { fill: #1e3a8a; }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <!-- Navbar -->
+    <nav class="bg-white py-4 px-8 flex justify-between items-center shadow-sm relative z-20">
+        <div class="flex items-center space-x-2">
+            <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+            </div>
+            <span class="text-xl font-bold text-blue-900">Cek<span class="text-blue-600">Ongkir</span></span>
+            <span class="text-gray-400 mx-2">|</span>
+            <span class="text-sm text-gray-500 hidden md:block">Cek ongkir semua ekspedisi<br>dalam satu tempat</span>
+        </div>
+        <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-600">
+            <a href="#" class="text-blue-600 border-b-2 border-blue-600 pb-1">Beranda</a>
+            <a href="#" class="hover:text-blue-600">Ekspedisi</a>
+            <a href="#" class="hover:text-blue-600">Fitur</a>
+            <a href="#" class="hover:text-blue-600">Tentang</a>
+        </div>
+        <div class="flex items-center space-x-2">
+            <div class="w-6 h-6 bg-red-500 rounded-full border-2 border-white shadow-sm overflow-hidden flex">
+                <div class="w-full h-1/2 bg-red-600"></div>
+                <div class="w-full h-1/2 bg-white"></div>
+            </div>
+            <span class="text-sm font-medium">Indonesia</span>
+            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-bg pt-16 pb-48 px-8 lg:px-24">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
+            <div class="md:w-1/2 z-10">
+                <h1 class="text-5xl font-extrabold text-slate-900 leading-tight mb-4">
+                    Cek Ongkir<br>Semua Ekspedisi
+                </h1>
+                <p class="text-slate-600 text-lg mb-8 max-w-md">
+                    Bandingkan tarif pengiriman dari seluruh ekspedisi di Indonesia, dengan cepat, mudah, dan akurat.
+                </p>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="flex items-start space-x-3">
+                        <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+                            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm text-slate-800">Semua Ekspedisi</h4>
+                            <p class="text-xs text-slate-500">Dari yang populer hingga yang jarang</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+                            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm text-slate-800">Seluruh Indonesia</h4>
+                            <p class="text-xs text-slate-500">Kirim ke semua kota & kabupaten</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+                            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm text-slate-800">Update Harga</h4>
+                            <p class="text-xs text-slate-500">Tarif selalu terbaru dan akurat</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+                            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm text-slate-800">Mudah & Cepat</h4>
+                            <p class="text-xs text-slate-500">Hanya dalam beberapa detik</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Decorative Right Side -->
+            <div class="md:w-1/2 mt-10 md:mt-0 relative h-64 z-10 hidden md:block">
+               <div class="absolute inset-0 bg-[url('https://upload.wikimedia.org/wikipedia/commons/4/46/Indonesia_location_map.svg')] bg-no-repeat bg-contain opacity-20"></div>
+               <div class="absolute right-0 top-1/2 transform -translate-y-1/2 rotate-3 bg-white p-4 shadow-xl rounded-xl">
+                   <p class="font-bold text-blue-600 text-lg">Dari Sabang<br>sampai Merauke<br>semua bisa!</p>
+               </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-32 relative z-20">
+        <!-- Search Card -->
+        <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-8 border border-gray-100">
+            <div class="flex items-center space-x-3 mb-6">
+                <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center shrink-0 shadow-md">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800">Cek Ongkir Sekarang</h2>
+                    <p class="text-sm text-slate-500">Masukkan detail pengiriman untuk melihat daftar harga terbaik dari semua ekspedisi.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
+                <!-- Origin -->
+                <div class="md:col-span-3 relative">
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Dari Kota / Kabupaten</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path></svg>
+                        </div>
+                        <input type="text" id="originInput" autocomplete="off" class="pl-9 w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="Contoh: Bantul">
+                        <input type="hidden" id="originId">
+                        <div id="originDropdown" class="dropdown-content"></div>
+                    </div>
+                </div>
+
+                <!-- Destination -->
+                <div class="md:col-span-3 relative">
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Ke Kota / Kabupaten</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path></svg>
+                        </div>
+                        <input type="text" id="destinationInput" autocomplete="off" class="pl-9 w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="Contoh: Samarinda">
+                        <input type="hidden" id="destinationId">
+                        <div id="destinationDropdown" class="dropdown-content"></div>
+                    </div>
+                </div>
+
+                <!-- Weight -->
+                <div class="md:col-span-2">
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Berat Paket (Gram)</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path></svg>
+                        </div>
+                        <input type="number" id="weight" value="1000" class="pl-9 w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="1000">
+                    </div>
+                </div>
+
+                <!-- Courier -->
+                <div class="md:col-span-2">
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Kurir</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <select id="courier" class="pl-9 w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none bg-white">
+                            <option value="jne,jnt,sicepat,anteraja,pos,tiki,ninja">Semua Ekspedisi</option>
+                            <option value="jne">JNE</option>
+                            <option value="jnt">J&T</option>
+                            <option value="sicepat">SiCepat</option>
+                        </select>
+                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="md:col-span-2">
+                    <button onclick="cekOngkir()" id="btnSubmit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-4 rounded-lg shadow-md transition flex justify-center items-center space-x-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        <span>Cek Ongkir</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Logos Banner -->
+        <div class="bg-white rounded-xl shadow-sm py-4 px-8 mb-12 flex justify-between items-center overflow-x-auto space-x-8 border border-gray-100">
+            <span class="font-bold text-red-600 italic text-xl shrink-0">JNE</span>
+            <span class="font-bold text-red-500 text-xl shrink-0">J&T <span class="text-sm">EXPRESS</span></span>
+            <span class="font-bold text-red-600 text-xl shrink-0">SICEPAT</span>
+            <span class="font-bold text-pink-500 text-xl shrink-0">anteraja</span>
+            <span class="font-bold text-red-600 text-xl shrink-0">ninja<span class="text-black">xpress</span></span>
+            <span class="font-bold text-orange-500 text-xl shrink-0">POS INDONESIA</span>
+            <span class="font-bold text-blue-800 text-xl shrink-0">TIKI</span>
+            <span class="font-bold text-gray-800 text-xl shrink-0">RPX</span>
+            <span class="text-sm text-gray-400 whitespace-nowrap shrink-0">... dan lainnya</span>
+        </div>
+
+        <!-- Bottom Layout -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 pb-32">
+            <!-- Left Info -->
+            <div class="md:col-span-4 mt-4">
+                <h3 class="text-blue-600 font-bold text-sm tracking-widest uppercase mb-2">Kenapa Pilih CekOngkir?</h3>
+                <h2 class="text-3xl font-extrabold text-slate-800 mb-4 leading-tight">Solusi Praktis untuk<br>Kebutuhan Pengiriman Anda</h2>
+                <p class="text-slate-600 text-sm mb-8">
+                    Cekongkir membantu Anda menemukan tarif pengiriman terbaik dari berbagai ekspedisi, tanpa perlu membuka satu per satu website. Hemat waktu, hemat biaya!
+                </p>
+            </div>
+
+            <!-- Right Results -->
+            <div class="md:col-span-8">
+                <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 relative z-10">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="font-bold text-lg text-slate-800">Hasil Pencarian</h3>
+                            <p class="text-xs text-slate-500" id="resultMeta">Silakan lakukan pencarian ongkir terlebih dahulu.</p>
+                        </div>
+                        <button class="flex items-center space-x-1 border border-gray-200 rounded-lg px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-gray-50">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"></path></svg>
+                            <span>Urutkan</span>
+                        </button>
+                    </div>
+
+                    <!-- Table List -->
+                    <div class="overflow-hidden">
+                        <table class="w-full text-left text-sm" id="resultsTable">
+                            <tbody class="divide-y divide-gray-100" id="resultsBody">
+                                <!-- Data dummy awal dibersihkan agar rapi -->
+                                <tr><td colspan="5" class="text-center text-slate-400 py-8">Hasil tarif pengiriman akan muncul di sini</td></tr>
+                            </tbody>
+                        </table>
+                        <div id="loadingState" class="hidden py-8 text-center text-slate-500 text-sm">
+                            <svg class="animate-spin h-5 w-5 mx-auto mb-2 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                            Mencari ongkir terbaik...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Blue Background Wave Graphic -->
+    <div class="fixed bottom-0 left-0 w-full h-64 bg-[#1e3a8a] z-0" style="clip-path: ellipse(150% 100% at 50% 100%);"></div>
+
+    <script>
+        let cities = [];
+
+        // Fetch otomatis data valid ID RajaOngkir/BinderByte
+        async function loadAllCities() {
+            try {
+                // Menggunakan repo raw data RajaOngkir asli
+                const res = await fetch('https://raw.githubusercontent.com/sastrawira/rajaongkir-json/master/city.json');
+                const data = await res.json();
+                const results = data.rajaongkir.results;
+
+                cities = results.map(c => ({
+                    id: c.city_id,
+                    // Format tampilan rapi di dropdown
+                    name: `${c.type === 'Kota' ? 'Kota' : 'Kab.'} ${c.city_name}, ${c.province}`,
+                    // Keyword pencarian rahasia biar gampang diketik user
+                    searchKey: `${c.city_name} ${c.province}`.toLowerCase()
+                }));
+                
+                document.getElementById('originInput').placeholder = "Contoh: Sleman";
+                document.getElementById('destinationInput').placeholder = "Contoh: Bantul";
+                console.log("Berhasil load " + cities.length + " kota/kabupaten.");
+            } catch (err) {
+                console.error("Gagal load kota.", err);
+            }
+        }
+
+        loadAllCities();
+
+        function setupAutocomplete(inputId, hiddenId, dropdownId) {
+            const input = document.getElementById(inputId);
+            const hidden = document.getElementById(hiddenId);
+            const dropdown = document.getElementById(dropdownId);
+
+            input.addEventListener('input', function() {
+                const val = this.value.toLowerCase().trim();
+                dropdown.innerHTML = '';
+                if (!val) { dropdown.classList.remove('show'); return; }
+
+                // LOGIKA BARU: Filter cerdas nyari kecocokan di 'searchKey' juga (tanpa embel-embel Kab/Kota)
+                const filtered = cities.filter(c => 
+                    c.searchKey.includes(val) || c.name.toLowerCase().includes(val)
+                ).slice(0, 15);
+                
+                if (filtered.length > 0) {
+                    filtered.forEach(city => {
+                        const div = document.createElement('div');
+                        div.className = 'dropdown-item text-sm text-slate-700';
+                        div.innerText = city.name;
+                        div.onclick = function() {
+                            input.value = city.name;
+                            hidden.value = city.id;
+                            dropdown.classList.remove('show');
+                        };
+                        dropdown.appendChild(div);
+                    });
+                    dropdown.classList.add('show');
+                } else {
+                    dropdown.classList.remove('show');
+                }
+            });
+
+            document.addEventListener('click', function(e) {
+                if (e.target !== input && e.target !== dropdown) {
+                    dropdown.classList.remove('show');
+                }
+            });
+        }
+
+        setupAutocomplete('originInput', 'originId', 'originDropdown');
+        setupAutocomplete('destinationInput', 'destinationId', 'destinationDropdown');
+
+        async function cekOngkir() {
+            const asal = document.getElementById('originId').value;
+            const asalNama = document.getElementById('originInput').value;
+            const tujuan = document.getElementById('destinationId').value;
+            const tujuanNama = document.getElementById('destinationInput').value;
+            const berat = document.getElementById('weight').value;
+            const kurir = document.getElementById('courier').value;
+
+            if (!asal || !tujuan || !berat) {
+                alert("Harap pilih kota dari dropdown yang muncul agar ID Kota terdeteksi.");
+                return;
+            }
+
+            const tbody = document.getElementById('resultsBody');
+            const loading = document.getElementById('loadingState');
+            const meta = document.getElementById('resultMeta');
+            const btn = document.getElementById('btnSubmit');
+
+            tbody.innerHTML = '';
+            loading.classList.remove('hidden');
+            meta.innerText = `Dari ${asalNama} ke ${tujuanNama} | Berat: ${berat}g`;
+            btn.disabled = true;
+            btn.innerHTML = 'Memproses...';
+
+            try {
+                const response = await fetch('/api/ongkir', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ asal, tujuan, berat, kurir })
+                });
+
+                const resData = await response.json();
+                loading.classList.add('hidden');
+                btn.disabled = false;
+                btn.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg><span>Cek Ongkir</span>`;
+
+                if (resData.status !== 200) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="text-center text-red-500 py-4">Gagal mengambil data: ${resData.message || 'Error API'}</td></tr>`;
+                    return;
+                }
+
+                let hasData = false;
+                resData.data.forEach(ekspedisi => {
+                    const namaKurir = ekspedisi.code.toUpperCase();
+                    ekspedisi.costs.forEach(cost => {
+                        hasData = true;
+                        const tr = document.createElement('tr');
+                        tr.className = 'hover:bg-slate-50 transition border-b border-gray-50 last:border-0';
+                        tr.innerHTML = `
+                            <td class="py-4 font-bold text-slate-800">${namaKurir}</td>
+                            <td class="py-4 text-slate-700 font-medium">${cost.service}</td>
+                            <td class="py-4 text-slate-500 text-xs flex items-center space-x-1 mt-1">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <span>${cost.etd ? cost.etd + ' hari' : '-'}</span>
+                            </td>
+                            <td class="py-4 font-bold text-slate-800">Rp ${cost.cost.toLocaleString('id-ID')}</td>
+                            <td class="py-4 text-right"><button class="bg-blue-600 hover:bg-blue-700 text-white text-xs px-4 py-1.5 rounded-md font-medium transition">Pilih</button></td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                });
+
+                if (!hasData) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="text-center text-slate-500 py-4">Tidak ada layanan tersedia untuk rute ini.</td></tr>`;
+                }
+
+            } catch (error) {
+                loading.classList.add('hidden');
+                btn.disabled = false;
+                btn.innerHTML = `Cek Ongkir`;
+                tbody.innerHTML = `<tr><td colspan="5" class="text-center text-red-500 py-4">Terjadi kesalahan sistem internal.</td></tr>`;
+            }
+        }
+    </script>
+</body>
+</html>
