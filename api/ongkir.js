@@ -4,21 +4,16 @@ export default async function handler(req, res) {
   }
 
   const { asal, tujuan, berat, kurir } = req.body;
-  const apiKey = process.env.RAJAONGKIR_API_KEY; // Pastikan key RajaOngkir yang dipasang di Vercel
+  // Memakai API Key yang sama yang sudah kamu set di Vercel
+  const apiKey = process.env.RAJAONGKIR_API_KEY; 
 
   if (!apiKey) {
     return res.status(500).json({ status: 500, message: 'API Key belum diset di Vercel.' });
   }
 
   try {
-    // Kurir default RajaOngkir Starter: jne, pos, tiki
-    // Kalau user pilih selain itu, arahkan ke jne dulu supaya nggak error
-    let selectedCourier = 'jne';
-    if (kurir.includes('pos')) selectedCourier = 'pos';
-    else if (kurir.includes('tiki')) selectedCourier = 'tiki';
-    else if (kurir.includes('jne')) selectedCourier = 'jne';
-
-    const response = await fetch('https://api.rajaongkir.com/starter/cost', {
+    // Endpoint resmi Komerce Tariff API
+    const response = await fetch('https://api.komerce.id/tariff/api/v1/calculate', {
       method: 'POST',
       headers: {
         'key': apiKey,
@@ -28,22 +23,16 @@ export default async function handler(req, res) {
         origin: asal,
         destination: tujuan,
         weight: berat,
-        courier: selectedCourier
+        courier: kurir
       })
     });
 
     const data = await response.json();
     
-    if (data.rajaongkir && data.rajaongkir.status.code === 200) {
-      return res.status(200).json({
-        status: 200,
-        data: data.rajaongkir.results
-      });
-    } else {
-      return res.status(400).json({ status: 400, message: data.rajaongkir?.status?.description || 'Gagal menghitung ongkir' });
-    }
+    // Teruskan respons dari Komerce langsung ke frontend
+    return res.status(200).json(data);
 
   } catch (error) {
-    return res.status(500).json({ status: 500, message: 'Gagal menghubungi server RajaOngkir' });
+    return res.status(500).json({ status: 500, message: 'Gagal menghubungi server Komerce' });
   }
 }
