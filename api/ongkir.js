@@ -4,7 +4,6 @@ export default async function handler(req, res) {
   }
 
   const { asal, tujuan, berat, kurir } = req.body;
-  // Memakai API Key yang sama yang sudah kamu set di Vercel
   const apiKey = process.env.RAJAONGKIR_API_KEY; 
 
   if (!apiKey) {
@@ -12,8 +11,8 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Endpoint resmi Komerce Tariff API
-    const response = await fetch('https://api.komerce.id/tariff/api/v1/calculate', {
+    // Menggunakan Endpoint Sandbox Komerce Tariff API
+    const response = await fetch('https://api-sandbox.komerce.id/tariff/api/v1/calculate', {
       method: 'POST',
       headers: {
         'key': apiKey,
@@ -29,10 +28,9 @@ export default async function handler(req, res) {
 
     const data = await response.json();
     
-    // Teruskan respons dari Komerce langsung ke frontend
     return res.status(200).json(data);
 
   } catch (error) {
-    return res.status(500).json({ status: 500, message: 'Gagal menghubungi server Komerce' });
+    return res.status(500).json({ status: 500, message: 'Gagal menghubungi server Sandbox Komerce' });
   }
 }
