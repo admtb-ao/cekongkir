@@ -249,7 +249,6 @@
     <div class="fixed bottom-0 left-0 w-full h-64 bg-[#1e3a8a] z-0" style="clip-path: ellipse(150% 100% at 50% 100%);"></div>
 
     <script>
-        // Fallback data instan agar dropdown tidak kosong
         let cities = [
             { id: "54", name: "Kab. Bantul, DI Yogyakarta", searchKey: "bantul di yogyakarta" },
             { id: "505", name: "Kota Yogyakarta, DI Yogyakarta", searchKey: "yogyakarta di yogyakarta" },
@@ -267,7 +266,6 @@
             { id: "271", name: "Kota Makassar, Sulawesi Selatan", searchKey: "makassar sulawesi selatan" }
         ];
 
-        // Fetch otomatis seluruh kota se-Indonesia di background
         async function loadAllCities() {
             try {
                 const res = await fetch('https://raw.githubusercontent.com/sastrawira/rajaongkir-json/master/city.json');
@@ -279,10 +277,7 @@
                     name: `${c.type === 'Kota' ? 'Kota' : 'Kab.'} ${c.city_name}, ${c.province}`,
                     searchKey: `${c.city_name} ${c.province}`.toLowerCase()
                 }));
-                console.log("Berhasil load full " + cities.length + " kota se-Indonesia.");
-            } catch (err) {
-                console.log("Menggunakan data cadangan lokal.");
-            }
+            } catch (err) {}
         }
 
         loadAllCities();
@@ -297,7 +292,6 @@
                 dropdown.innerHTML = '';
                 if (!val) { dropdown.classList.remove('show'); return; }
 
-                // Smart Search: bisa cari walau tanpa ngetik "Kab." atau "Kota"
                 const filtered = cities.filter(c => 
                     c.searchKey.includes(val) || c.name.toLowerCase().includes(val)
                 ).slice(0, 15);
